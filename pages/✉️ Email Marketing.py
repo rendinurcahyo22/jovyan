@@ -60,14 +60,6 @@ def open_app(app_name):
     st.experimental_set_query_params(page=app_name)
 
 
-# Sidebar
-with st.sidebar:
-
-    palm_api_key = st.text_input('PaLM API Key',
-                                 key='palm_api_key',
-                                 help="Don't have API Key? [Join the waitlist](https://developers.generativeai.google/products/palm) or Generate using your Google Cloud project"
-                                 )
-
 # Set up the layout
 col1, col2 = st.columns([3, 1])  # Adjust column widths as needed
 
@@ -92,26 +84,26 @@ with col1:
         prompt = ""
     
     # Process user input and interact with the chatbot
-    if prompt:
-        if not palm_api_key:
-            st.info("Please add your PaLM API key to continue.")
-        else:
-            try:
-                palm.configure(api_key=palm_api_key)
-            except Exception as e:
-                st.info("Please pass a valid API key")
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            st.chat_message("user").write(prompt)
+    # if prompt:
+    #     if not palm_api_key:
+    #         st.info("Please add your PaLM API key to continue.")
+    #     else:
+    #         try:
+    #             palm.configure(api_key=palm_api_key)
+    #         except Exception as e:
+    #             st.info("Please pass a valid API key")
+    #         st.session_state.messages.append({"role": "user", "content": prompt})
+    #         st.chat_message("user").write(prompt)
             
-            # Create a message for the PaLM API
-            user_messages = [{"role": "system", "content": "You are a marketing consultant."}]
-            user_messages.extend(st.session_state.messages)
+    #         # Create a message for the PaLM API
+    #         user_messages = [{"role": "system", "content": "You are a marketing consultant."}]
+    #         user_messages.extend(st.session_state.messages)
             
-            response = palm.chat(messages=prompt)
-            msg = {"role": "assistant", "content": response.last}
-            st.session_state.messages.append(msg)
-            st.chat_message("assistant").write(msg["content"])
+    #         response = palm.chat(messages=prompt)
+    #         msg = {"role": "assistant", "content": response.last}
+    #         st.session_state.messages.append(msg)
+    #         st.chat_message("assistant").write(msg["content"])
 
-            # Clear the text input after sending a message
-            st.session_state.prev_prompt = True
-            prompt = ""  # Clear the prompt
+    #         # Clear the text input after sending a message
+    #         st.session_state.prev_prompt = True
+    #         prompt = ""  # Clear the prompt
